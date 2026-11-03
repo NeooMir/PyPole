@@ -1,4 +1,6 @@
-# Network IPC client for connecting with the Pole IDE GUI application.
+# Low-level IPC transport and socket client for the Pole / NeoMir educational IDE.
+# Handles automatic socket discovery, singleton connection lifecycles, and serializes
+# JSON command and telemetry payloads between external environments and the Pole IDE.
 
 import os
 import sys
@@ -10,7 +12,7 @@ from .errors import PoleConnectionError
 
 
 class PoleClient:
-    # IPC client for sending commands and receiving performer states from Pole
+    # Singleton IPC client for sending performer commands and receiving states from Pole
     _instance: Optional['PoleClient'] = None
 
     def __init__(self, socket_path: Optional[str] = None):
