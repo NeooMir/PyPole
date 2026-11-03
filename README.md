@@ -20,13 +20,25 @@ It allows students and developers to write Python algorithms in their favorite I
 
 ## Installation
 
-### From Source
-Navigate to the repository and install in editable development mode:
+### From PyPI
+```bash
+pip install pypole
+```
+
+### From Local Source (Development Mode)
+
+If you are inside the `python/` directory:
+```bash
+pip install -e .
+```
+
+If you are at the project root directory:
 ```bash
 pip install -e ./python
 ```
 
-Or simply add the repository root to your `PYTHONPATH` or open the project folder in **PyCharm**.
+> [!TIP]
+> In managed environments (or without a virtual environment), use `pip install --user -e .` without `sudo`.
 
 ---
 
