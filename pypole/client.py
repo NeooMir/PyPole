@@ -29,7 +29,14 @@ class PoleClient:
     @staticmethod
     def _discover_socket() -> str:
         # Automatically locates active Pole socket in the environment
+        env_sock = os.environ.get("NEOMIR_SOCKET") or os.environ.get("POLE_SOCKET")
+        if env_sock and os.path.exists(env_sock):
+            return env_sock
+
         candidates = []
+        if env_sock:
+            candidates.append(Path(env_sock))
+
         if sys.platform != "win32":
             runtime_dir = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
             candidates.append(Path(runtime_dir) / "neomir.sock")

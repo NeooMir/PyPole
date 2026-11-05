@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pypole",
-    version="1.0.0",
+    name="neoomir-pypole",
+    version="1.0.1",
     description="Official Python API client for Pole / NeoMir educational IDE",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",

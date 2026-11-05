@@ -1,6 +1,6 @@
-# PyPole
+# PyPole (neoomir-pypole)
 
-**PyPole** is the official Python API binding and client library for the **Pole** (NeoMir) educational IDE.
+**PyPole** (`neoomir-pypole`) is the official Python API binding and client library for the **Pole** (NeoMir) educational IDE.
 
 It allows students and developers to write Python algorithms in their favorite IDEs (**PyCharm**, **VS Code**, **Jupyter**, or system terminal) and control the performers (**Robot** and **Turtle**) running in the Pole graphical window in real time, with instant diagnostic state streaming straight into your IDE run console.
 
@@ -10,35 +10,61 @@ It allows students and developers to write Python algorithms in their favorite I
 
 - **Real-Time Visual Execution:** Commands execute in the Pole canvas with smooth animation, step tracking, and visual feedback.
 - **Instant IDE Console Output:** Calling performer methods automatically logs formatted status updates, coordinates, and sensor metrics directly to your PyCharm / terminal console (`verbose=True` by default).
+- **Flexible Import Styles:** Import via `neoomir_pypole`, `pypole`, or `pole`:
+  ```python
+  from neoomir_pypole import robot, turtle
+  # or
+  from pypole import robot, turtle
+  # or
+  from pole import robot, turtle
+  ```
 - **Full Bilingual Support:** Supports both standard English API names and Russian algorithmic keywords matching the KuMir educational syllabus:
   - `robot.right()` and `робот.вправо()`
   - `turtle.forward(100)` and `черепаха.вперёд(100)`
-- **Zero Configuration:** Automatically locates and establishes Unix Domain Socket or Windows Named Pipe connections to the active Pole instance.
+- **Zero Configuration:** Automatically locates Unix Domain Socket or Windows Named Pipe connections to the active Pole instance (including `NEOMIR_SOCKET` / `POLE_SOCKET` environment variables and Flatpak runtime directories).
 - **Built-in Safety & Diagnostics:** Raises structured exceptions such as `RobotCrashError` when colliding with walls, with exact coordinates of the collision.
 
 ---
 
 ## Installation
 
-### From PyPI
+### 1. From PyPI (Recommended for PyCharm / VS Code)
+
+In your project environment or PyCharm terminal:
 ```bash
-pip install pypole
+pip install neoomir-pypole
 ```
 
-### From Local Source (Development Mode)
+> [!IMPORTANT]
+> The official PyPI package name is **`neoomir-pypole`**. Make sure to run `pip install neoomir-pypole` inside the virtual environment (`venv`) of your IDE project.
 
-If you are inside the `python/` directory:
+### 2. PyCharm Setup Guide
+
+If PyCharm shows `ModuleNotFoundError: No module named 'pypole'` or `'neoomir_pypole'`:
+1. **Using PyCharm Terminal**:
+   Open the **Terminal** tab at the bottom of PyCharm (it automatically activates your project's `.venv`) and run:
+   ```bash
+   pip install neoomir-pypole
+   ```
+2. **Using PyCharm Settings**:
+   - Go to **File → Settings** (or **Preferences** on macOS) → **Project: ... → Python Interpreter**.
+   - Click the **+** (Install) button.
+   - Type `neoomir-pypole` and click **Install Package**.
+3. **From Local Source Directory**:
+   If working directly within this repository in PyCharm, right-click the `python/` directory in the Project Explorer tree and select:
+   **Mark Directory as → Sources Root**.
+
+### 3. From Local Source (Editable Mode)
+
+Inside the `python/` folder:
 ```bash
 pip install -e .
 ```
 
-If you are at the project root directory:
+From the repository root:
 ```bash
 pip install -e ./python
 ```
-
-> [!TIP]
-> In managed environments (or without a virtual environment), use `pip install --user -e .` without `sudo`.
 
 ---
 
@@ -47,7 +73,8 @@ pip install -e ./python
 ### 1. Controlling the Robot (English Syntax)
 
 ```python
-from pypole import robot
+from neoomir_pypole import robot
+# (also works: from pypole import robot)
 
 # Reset field to starting position
 robot.reset()
@@ -65,7 +92,8 @@ if robot.wall_up():
 ### 2. Controlling the Robot (Russian Syntax / KuMir Style)
 
 ```python
-from pypole import робот
+from neoomir_pypole import робот
+# (also works: from pypole import робот)
 
 робот.сброс()
 
@@ -80,7 +108,8 @@ if робот.сверху_стена():
 ### 3. Controlling the Turtle (Vector Graphics)
 
 ```python
-from pypole import turtle
+from neoomir_pypole import turtle
+# (also works: from pypole import turtle)
 
 turtle.home()
 turtle.clear()
@@ -109,7 +138,7 @@ When running commands from PyCharm, each step prints detailed diagnostic informa
 
 To mute automatic console printing, pass `verbose=False` or call `set_verbose(False)`:
 ```python
-from pypole import robot, set_verbose
+from neoomir_pypole import robot, set_verbose
 
 set_verbose(False)
 robot.right(5)  # Executes silently in Pole without printing to IDE console
@@ -119,7 +148,7 @@ robot.right(5)  # Executes silently in Pole without printing to IDE console
 
 ## API Reference
 
-### Robot Performer (`pypole.Robot`)
+### Robot Performer (`neoomir_pypole.Robot`)
 
 | Method (EN) | Method (RU) | Description |
 | :--- | :--- | :--- |
@@ -142,7 +171,7 @@ robot.right(5)  # Executes silently in Pole without printing to IDE console
 | `robot.is_painted()` | `робот.клетка_закрашена()` | `True` if current cell is painted |
 | `robot.is_clean()` | `робот.клетка_чистая()` | `True` if current cell is clean |
 
-### Turtle Performer (`pypole.Turtle`)
+### Turtle Performer (`neoomir_pypole.Turtle`)
 
 | Method (EN) | Method (RU) | Description |
 | :--- | :--- | :--- |
@@ -161,7 +190,7 @@ robot.right(5)  # Executes silently in Pole without printing to IDE console
 ## Exception Handling
 
 ```python
-from pypole import robot, RobotCrashError, PoleConnectionError
+from neoomir_pypole import robot, RobotCrashError, PoleConnectionError
 
 try:
     robot.up(10)
